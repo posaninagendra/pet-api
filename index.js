@@ -4,12 +4,16 @@ var pg = require('pg');
 
 app.get('/pets', function(req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    if ( err ) {
+      throw err;
+    }
+    console.log('connected to db');
     client.query('SELECT * FROM pets', function(err, result) {
       done();
       if (err) {
         console.error(err);
         response.send("Error " + err);
-      } else { 
+      } else {
         response.send( result.rows );
       }
     });
