@@ -3,7 +3,7 @@ var app = express();
 var pg = require('pg');
 
 app.get('/pets', function(req, res) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  pg.connect(process.env.DATABASE_URL + '?sslmode=require', function(err, client, done) {
     if ( err ) {
       throw err;
     }
