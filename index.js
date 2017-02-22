@@ -3,6 +3,9 @@ var app = express();
 var pg = require('pg');
 pg.defaults.ssl = true;
 
+app.use(express.json());
+app.use(express.urlencoded());
+
 app.get('/pets', function(req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if ( err ) {
@@ -38,13 +41,13 @@ app.get('/pets/:petId', function(req, res) {
 });
 
 app.post('/pets', function(req, res) {
-  console.log('Adding: ' + req);
+  console.log('Adding: ' + req.body);
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if ( err ) {
       throw err;
     }
     client.query('insert into pets values (DEFAULT,$1::text,$2::text,$3::text,$4::text,$5::numeric,$6::numeric);',
-        [req.params.name, req.params.type, req.params.breed, req.params.location, req.params.latitude, req.params.longitude],
+        [req.body.name, req.body.type, req.body.breed, req.body.location, req.body.latitude, req.body.longitude],
         function(err, result) {
       done();
       if (err) {
