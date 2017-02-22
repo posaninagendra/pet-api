@@ -1,0 +1,23 @@
+{
+  "name": "pet-api",
+  "version": "1.0.0",
+  "author": "Kevin Petrychyn",
+  "dependencies": {
+    "express": "^4.14.1"
+  },
+  "description": "Pet Shelter API",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Petrychyn/pet-api.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Petrychyn/pet-api/issues"
+  },
+  "homepage": "https://github.com/Petrychyn/pet-api#readme"
+}
