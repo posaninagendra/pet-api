@@ -3,8 +3,11 @@ var app = express();
 var pg = require('pg');
 pg.defaults.ssl = true;
 
-app.use(express.json());
-app.use(express.urlencoded());
+var bodyParser = require('body-parser')
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.get('/pets', function(req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
