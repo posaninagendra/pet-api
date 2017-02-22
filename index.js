@@ -26,7 +26,7 @@ app.get('/pets/:petId', function(req, res) {
     if ( err ) {
       throw err;
     }
-    client.query('SELECT * FROM pets where id=$1::numeric', req.params.petId, function(err, result) {
+    client.query('SELECT * FROM pets where id=$1::numeric', [req.params.petId], function(err, result) {
       done();
       if (err) {
         console.error(err);
