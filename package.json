@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "author": "Kevin Petrychyn",
   "dependencies": {
-    "express": "^4.14.1"
+    "express": "^4.14.1",
+    "pg": "^6.1.2"
   },
   "description": "Pet Shelter API",
   "main": "index.js",
