@@ -37,8 +37,23 @@ app.get('/pets/:petId', function(req, res) {
   });
 });
 
-app.post('/pets/add', function(req, res) {
-  res.send('add pet');
+app.post('/pets', function(req, res) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    if ( err ) {
+      throw err;
+    }
+    client.query('insert into pets values (DEFAULT,$1::text,$2::text,$3::text,$4::text,$5::numeric,$6::numeric);',
+        [req.params.name, req.params.type, req.params.breed, req.params.location, req.params.latitude, req.params.longitude],
+        function(err, result) {
+      done();
+      if (err) {
+        console.error(err);
+        res.send("Error " + err);
+      } else {
+        res.send( result );
+      }
+    });
+  });
 });
 
 app.listen(process.env.PORT || 3000, function () {
