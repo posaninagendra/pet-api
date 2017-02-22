@@ -21,7 +21,6 @@ app.get('/pets', function(req, res) {
 });
 
 app.get('/pets/:petId', function(req, res) {
-  res.send('get pet ' + req.params.petId);
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if ( err ) {
       throw err;
