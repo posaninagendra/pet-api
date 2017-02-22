@@ -16,7 +16,7 @@ app.get('/pets', function(req, res) {
         console.error(err);
         response.send("Error " + err);
       } else {
-        response.send( result.rows );
+        response.send( result || 'nothing' );
       }
     });
   });
