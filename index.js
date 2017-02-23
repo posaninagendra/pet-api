@@ -18,9 +18,9 @@ app.get('/pets', function(req, res) {
       done();
       if (err) {
         console.error(err);
-        res.send("Error " + err);
+        res.send({ 'success': false, 'error': err});
       } else {
-        res.send( result.rows );
+        res.send({ 'success': true, 'data': result.rows });
       }
     });
   });
@@ -35,9 +35,9 @@ app.get('/pets/:petId', function(req, res) {
       done();
       if (err) {
         console.error(err);
-        res.send("Error " + err);
+        res.send({ 'success': false, 'error': err});
       } else {
-        res.send( result.rows );
+        res.send({ 'success': true, 'data': result.rows });
       }
     });
   });
@@ -55,9 +55,9 @@ app.post('/pets', function(req, res) {
       done();
       if (err) {
         console.error(err);
-        res.send("Error " + err);
+        res.send({ 'success': false, 'error': err});
       } else {
-        res.send( result );
+        res.send({ 'success': true });
       }
     });
   });
