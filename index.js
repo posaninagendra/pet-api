@@ -20,7 +20,7 @@ app.get('/pets', function(req, res) {
         console.error(err);
         res.send(createError(err));
       } else {
-        res.send({ 'success': true, 'data': result.rows });
+        res.send(createResponse(result.rows);
       }
     });
   });
@@ -38,7 +38,7 @@ app.get('/pets/:petId', function(req, res) {
         res.send(createError(err));
       } else {
         if ( result.rows[0] ) {
-          res.send({ 'success': true, 'data': result.rows[0] });
+          res.send(createResponse(result.rows[0]));
         } else {
           res.send(createError('Id ' + req.params.petId + ' not found'));
         }
@@ -86,7 +86,7 @@ app.post('/pets', function(req, res) {
                   console.error(err);
                   res.send(createError(err));
                 } else {
-                  res.send({ 'success': true, 'data': {'id': result.rows[0].last_value } });
+                  res.send(createResponse({'id': result.rows[0].last_value } }));
                 }
               });
             }
@@ -95,6 +95,10 @@ app.post('/pets', function(req, res) {
       });
     });
 });
+
+function createResponse(data) {
+  return { 'success': true, 'data': data };
+}
 
 function createError(err) {
   return { 'success': false, 'error': err};
