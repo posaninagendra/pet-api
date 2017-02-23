@@ -48,18 +48,20 @@ app.get('/pets/:petId', function(req, res) {
 });
 
 app.post('/pets', function(req, res) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if ( err ) {
       throw err;
     }
     var latitude = req.body.latitude;
     if ( !validLatitude(latitude) ) {
-      res.jsonp(createError('Invalid latitude ' + latitude));
+      res.json(createError('Invalid latitude ' + latitude));
       return;
     }
     var longitude = req.body.longitude;
     if ( !validLongitude(longitude) ) {
-      res.jsonp(createError('Invalid longitude ' + longitude));
+      res.json(createError('Invalid longitude ' + longitude));
       return;
     }
     var name = req.body.name;
@@ -69,24 +71,24 @@ app.post('/pets', function(req, res) {
       function(err, result) {
         if (err) {
           console.error(err);
-          res.jsonp(createError(err));
+          res.json(createError(err));
         } else if ( result.rows[0] ) {
-          res.jsonp(createError('A ' + type + ' named ' + name + ' already exists'));
+          res.json(createError('A ' + type + ' named ' + name + ' already exists'));
         } else {
           client.query('insert into pets values (DEFAULT,$1::text,$2::text,$3::text,$4::text,$5::numeric,$6::numeric);',
               [name, type, req.body.breed, req.body.location, latitude, longitude],
               function(err, result) {
             if (err) {
               console.error(err);
-              res.jsonp(createError(err));
+              res.json(createError(err));
             } else {
               client.query('select last_value from pet_id_seq', function(err, result) {
                 done();
                 if (err) {
                   console.error(err);
-                  res.jsonp(createError(err));
+                  res.json(createError(err));
                 } else {
-                  res.jsonp(createResponse({'id': result.rows[0].last_value }));
+                  res.json(createResponse({'id': result.rows[0].last_value }));
                 }
               });
             }
