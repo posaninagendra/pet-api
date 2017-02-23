@@ -86,7 +86,7 @@ app.post('/pets', function(req, res) {
                   console.error(err);
                   res.send(createError(err));
                 } else {
-                  res.send(createResponse({'id': result.rows[0].last_value } }));
+                  res.send(createResponse({'id': result.rows[0].last_value }));
                 }
               });
             }
