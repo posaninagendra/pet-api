@@ -59,12 +59,12 @@ app.post('/pets', function(req, res) {
       throw err;
     }
     var latitude = req.body.latitude;
-    if ( !validLocation(latitude) ) {
+    if ( !validLatitude(latitude) ) {
       res.send(createError('Invalid latitude ' + latitude));
       return;
     }
     var longitude = req.body.longitude;
-    if ( !validLocation(longitude) ) {
+    if ( !validLongitude(longitude) ) {
       res.send(createError('Invalid longitude ' + longitude));
       return;
     }
@@ -110,8 +110,12 @@ function createError(err) {
   return { 'success': false, 'error': err};
 }
 
-function validLocation(x) {
+function validLongitude(x) {
   return -180 <= x && x <= 180;
+}
+
+function validLatitude(x) {
+  return -90 <= x && x <= 90;
 }
 
 app.listen(process.env.PORT || 3000, function () {
