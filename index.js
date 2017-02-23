@@ -9,12 +9,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
 app.get('/pets', function(req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if ( err ) {
