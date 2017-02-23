@@ -76,7 +76,6 @@ app.post('/pets', function(req, res) {
               console.error(err);
               res.send(createError(err));
             } else {
-              res.send({ 'success': true });
               client.query('select last_value from pet_id_seq', function(err, result) {
                 done();
                 if (err) {
