@@ -37,7 +37,11 @@ app.get('/pets/:petId', function(req, res) {
         console.error(err);
         res.send(createError(err));
       } else {
-        res.send({ 'success': true, 'data': result.rows });
+        if ( result.rows[0] ) {
+          res.send({ 'success': true, 'data': result.rows[0] });
+        } else {
+          res.send(createError('Id ' + req.params.petId + ' not found'));
+        }
       }
     });
   });
@@ -50,12 +54,12 @@ app.post('/pets', function(req, res) {
     }
     var latitude = req.body.latitude;
     if ( !validLocation(latitude) ) {
-      res.send(createError('Invalid latitude "' + latitude + '"'));
+      res.send(createError('Invalid latitude ' + latitude));
       return;
     }
     var longitude = req.body.longitude;
     if ( !validLocation(longitude) ) {
-      res.send(createError('Invalid longitude "' + longitude + '"'));
+      res.send(createError('Invalid longitude ' + longitude));
       return;
     }
     var name = req.body.name;
