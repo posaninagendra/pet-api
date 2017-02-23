@@ -88,7 +88,7 @@ app.post('/pets', function(req, res) {
               });
             }
           });
-        });
+        }});
       }
     });
 });
