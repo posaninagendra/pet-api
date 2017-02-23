@@ -18,9 +18,9 @@ app.get('/pets', function(req, res) {
       done();
       if (err) {
         console.error(err);
-        res.send(createError(err));
+        res.jsonp(createError(err));
       } else {
-        res.send(createResponse(result.rows));
+        res.jsonp(createResponse(result.rows));
       }
     });
   });
@@ -35,12 +35,12 @@ app.get('/pets/:petId', function(req, res) {
       done();
       if (err) {
         console.error(err);
-        res.send(createError(err));
+        res.jsonp(createError(err));
       } else {
         if ( result.rows[0] ) {
-          res.send(createResponse(result.rows[0]));
+          res.jsonp(createResponse(result.rows[0]));
         } else {
-          res.send(createError('Id ' + req.params.petId + ' not found'));
+          res.jsonp(createError('Id ' + req.params.petId + ' not found'));
         }
       }
     });
@@ -54,12 +54,12 @@ app.post('/pets', function(req, res) {
     }
     var latitude = req.body.latitude;
     if ( !validLatitude(latitude) ) {
-      res.send(createError('Invalid latitude ' + latitude));
+      res.jsonp(createError('Invalid latitude ' + latitude));
       return;
     }
     var longitude = req.body.longitude;
     if ( !validLongitude(longitude) ) {
-      res.send(createError('Invalid longitude ' + longitude));
+      res.jsonp(createError('Invalid longitude ' + longitude));
       return;
     }
     var name = req.body.name;
@@ -69,24 +69,24 @@ app.post('/pets', function(req, res) {
       function(err, result) {
         if (err) {
           console.error(err);
-          res.send(createError(err));
+          res.jsonp(createError(err));
         } else if ( result.rows[0] ) {
-          res.send(createError('A ' + type + ' named ' + name + ' already exists'));
+          res.jsonp(createError('A ' + type + ' named ' + name + ' already exists'));
         } else {
           client.query('insert into pets values (DEFAULT,$1::text,$2::text,$3::text,$4::text,$5::numeric,$6::numeric);',
               [name, type, req.body.breed, req.body.location, latitude, longitude],
               function(err, result) {
             if (err) {
               console.error(err);
-              res.send(createError(err));
+              res.jsonp(createError(err));
             } else {
               client.query('select last_value from pet_id_seq', function(err, result) {
                 done();
                 if (err) {
                   console.error(err);
-                  res.send(createError(err));
+                  res.jsonp(createError(err));
                 } else {
-                  res.send(createResponse({'id': result.rows[0].last_value }));
+                  res.jsonp(createResponse({'id': result.rows[0].last_value }));
                 }
               });
             }
